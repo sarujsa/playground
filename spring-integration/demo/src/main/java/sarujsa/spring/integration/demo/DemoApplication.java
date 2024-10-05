@@ -19,7 +19,10 @@ import org.springframework.integration.file.filters.AcceptOnceFileListFilter;
 import org.springframework.integration.file.filters.CompositeFileListFilter;
 import org.springframework.integration.file.filters.SimplePatternFileListFilter;
 import org.springframework.integration.handler.LoggingHandler;
+import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
+import org.springframework.messaging.MessageHandler;
+import org.springframework.messaging.MessagingException;
 import org.springframework.messaging.support.ChannelInterceptor;
 
 import java.io.File;
@@ -81,12 +84,9 @@ public class DemoApplication {
 
   @Bean
   @ServiceActivator(inputChannel = "fileInputChannel")
-  public FileWritingMessageHandler fileOutbound() {
-    FileWritingMessageHandler handler = new FileWritingMessageHandler(new File(outDirectoryName));
-    handler.setExpectReply(false);
-    handler.setDeleteSourceFiles(true);
-    handler.setAutoCreateDirectory(true);
-    return handler;
+  public MessageHandler outboundAdapterWithoutAction() {
+      return (message) ->
+          System.out.println(
+              "NoActionOutboundAdapter for message " + message.getHeaders().getId());
   }
-
 }
