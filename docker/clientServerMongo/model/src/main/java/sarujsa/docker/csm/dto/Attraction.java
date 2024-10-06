@@ -8,6 +8,14 @@ public class Attraction {
     private Location location;
     private String description;
 
+    public Attraction() {}
+
+    public Attraction(String name, Location location, String description) {
+        this.name = name;
+        this.location = location;
+        this.description = description;
+    }
+
     public String getName() {
         return name;
     }

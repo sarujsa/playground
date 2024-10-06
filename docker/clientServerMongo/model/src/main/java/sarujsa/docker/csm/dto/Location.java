@@ -8,6 +8,14 @@ public class Location {
     private String country;
     private LocationType type;
 
+    public Location() {}
+
+    public Location(String name, String country, LocationType type) {
+        this.name = name;
+        this.country = country;
+        this.type = type;
+    }
+
     public String getName() {
         return name;
     }
