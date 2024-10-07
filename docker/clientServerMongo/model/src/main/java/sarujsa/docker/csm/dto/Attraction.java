@@ -52,4 +52,13 @@ public class Attraction {
     public int hashCode() {
         return Objects.hash(name, location, description);
     }
+
+    @Override
+    public String toString() {
+        return "Attraction{" +
+                "name='" + name + '\'' +
+                ", location=" + location +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }

@@ -53,4 +53,12 @@ public class Location {
         return Objects.hash(name, country, type);
     }
 
+    @Override
+    public String toString() {
+        return "Location{" +
+                "name='" + name + '\'' +
+                ", country='" + country + '\'' +
+                ", type=" + type +
+                '}';
+    }
 }
