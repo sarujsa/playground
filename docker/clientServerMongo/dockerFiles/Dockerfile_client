@@ -1,0 +1,17 @@
+FROM maven:3.9.9-eclipse-temurin-21
+
+WORKDIR /opt/app/model
+
+COPY model/src ./src
+COPY model/pom.xml .
+
+RUN mvn clean install
+
+WORKDIR /opt/app/client
+
+COPY client/src ./src
+COPY client/pom.xml .
+
+RUN mvn clean install
+
+CMD ["java", "-jar", "target/client-0.0.1-SNAPSHOT.jar"]
