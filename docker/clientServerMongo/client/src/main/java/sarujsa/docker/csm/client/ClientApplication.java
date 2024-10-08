@@ -12,13 +12,14 @@ import sarujsa.docker.csm.dto.Attraction;
 import sarujsa.docker.csm.dto.Location;
 import sarujsa.docker.csm.dto.LocationType;
 
+import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
 
 @SpringBootApplication
 public class ClientApplication {
 
-  private static final String BASE_URL = "http://localhost:8181";
+  private static final String BASE_URL = "http://csm_server_container:8181";
   private static final String API = "/api/v1/attractions/";
   private static final String ADD_URL = BASE_URL + API + "add";
   private static final String GET_ONE_URL = BASE_URL + API + "getOne";
@@ -30,9 +31,11 @@ public class ClientApplication {
     return new RestTemplateBuilder();
   }
 
-  public static void main(String[] args) {
+  public static void main(String[] args) throws InterruptedException {
     var context =
         new SpringApplicationBuilder(ClientApplication.class).web(WebApplicationType.NONE).run();
+
+    Thread.sleep(Duration.ofSeconds(5));
 
     initLocations();
 
@@ -59,6 +62,7 @@ public class ClientApplication {
             "Empire State Building",
             locationMap.get("New York"),
             "A famous skyscraper in New York");
+    System.out.println("URL = " + ADD_URL);
     ResponseEntity<String> response = restTemplate.postForEntity(ADD_URL, attraction, String.class);
     System.out.println(response.getBody());
   }

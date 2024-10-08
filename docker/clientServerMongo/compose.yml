@@ -1,0 +1,25 @@
+name: csm
+
+services:
+  csm_client:
+    build:
+      context: .
+      dockerfile: ./dockerFiles/Dockerfile_client
+    networks:
+      - frontend
+    container_name:
+      csm_client_container
+    depends_on:
+      - csm_server
+  csm_server:
+    build:
+      context: .
+      dockerfile: ./dockerFiles/Dockerfile_server
+    networks:
+      - frontend
+    container_name:
+      csm_server_container
+
+networks:
+  frontend:
+    driver: bridge

@@ -5,14 +5,14 @@ WORKDIR /opt/app/model
 COPY model/src ./src
 COPY model/pom.xml pom.xml
 
-RUN mvn clean install
+RUN mvn clean install -Dmaven.test.skip=true
 
 WORKDIR /opt/app/server
 
 COPY server/src ./src
 COPY server/pom.xml pom.xml
 
-RUN mvn clean install
+RUN mvn clean install -Dmaven.test.skip=true
 
 EXPOSE 8181
 
