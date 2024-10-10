@@ -2,15 +2,15 @@ package sarujsa.docker.csm.dto;
 
 import java.util.Objects;
 
-public class Location {
+public class LocationDto {
 
     private String name;
     private String country;
     private LocationType type;
 
-    public Location() {}
+    public LocationDto() {}
 
-    public Location(String name, String country, LocationType type) {
+    public LocationDto(String name, String country, LocationType type) {
         this.name = name;
         this.country = country;
         this.type = type;
@@ -44,8 +44,8 @@ public class Location {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Location location = (Location) o;
-        return Objects.equals(name, location.name) && Objects.equals(country, location.country) && type == location.type;
+        LocationDto locationDto = (LocationDto) o;
+        return Objects.equals(name, locationDto.name) && Objects.equals(country, locationDto.country) && type == locationDto.type;
     }
 
     @Override

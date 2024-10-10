@@ -8,8 +8,8 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
-import sarujsa.docker.csm.dto.Attraction;
-import sarujsa.docker.csm.dto.Location;
+import sarujsa.docker.csm.dto.AttractionDto;
+import sarujsa.docker.csm.dto.LocationDto;
 import sarujsa.docker.csm.dto.LocationType;
 
 import java.time.Duration;
@@ -24,7 +24,7 @@ public class ClientApplication {
   private static final String ADD_URL = BASE_URL + API + "add";
   private static final String GET_ONE_URL = BASE_URL + API + "getOne";
 
-  private static final Map<String,Location> locationMap = new HashMap<>();
+  private static final Map<String, LocationDto> locationMap = new HashMap<>();
 
   @Bean
   public RestTemplateBuilder restTemplateBuilder() {
@@ -47,7 +47,7 @@ public class ClientApplication {
   }
 
   private static void getAttractions(RestTemplate restTemplate) {
-    ResponseEntity<Attraction> response = restTemplate.getForEntity(GET_ONE_URL, Attraction.class);
+    ResponseEntity<AttractionDto> response = restTemplate.getForEntity(GET_ONE_URL, AttractionDto.class);
     System.out.println(response.getBody());
   }
 
@@ -57,22 +57,22 @@ public class ClientApplication {
   }
 
   private static void postAttractions(RestTemplate restTemplate) {
-    Attraction attraction =
-        new Attraction(
+    AttractionDto attractionDto =
+        new AttractionDto(
             "Empire State Building",
             locationMap.get("New York"),
             "A famous skyscraper in New York");
     System.out.println("URL = " + ADD_URL);
-    ResponseEntity<String> response = restTemplate.postForEntity(ADD_URL, attraction, String.class);
+    ResponseEntity<String> response = restTemplate.postForEntity(ADD_URL, attractionDto, String.class);
     System.out.println(response.getBody());
   }
 
   private static void initLocations() {
-    Location nile = new Location("Nile", "EG", LocationType.RIVER);
-    Location paris = new Location("Paris", "FR", LocationType.CITY);
-    Location newYork = new Location("New York", "US", LocationType.CITY);
-    Location alps = new Location("Alps", "AT", LocationType.MOUNTAIN);
-    Location sidney = new Location("Sidney", "AU", LocationType.CITY);
+    LocationDto nile = new LocationDto("Nile", "EG", LocationType.RIVER);
+    LocationDto paris = new LocationDto("Paris", "FR", LocationType.CITY);
+    LocationDto newYork = new LocationDto("New York", "US", LocationType.CITY);
+    LocationDto alps = new LocationDto("Alps", "AT", LocationType.MOUNTAIN);
+    LocationDto sidney = new LocationDto("Sidney", "AU", LocationType.CITY);
 
     locationMap.put("Nile", nile);
     locationMap.put("Paris", paris);

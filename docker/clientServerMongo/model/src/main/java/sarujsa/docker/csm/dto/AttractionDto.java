@@ -2,17 +2,17 @@ package sarujsa.docker.csm.dto;
 
 import java.util.Objects;
 
-public class Attraction {
+public class AttractionDto {
 
     private String name;
-    private Location location;
+    private LocationDto locationDto;
     private String description;
 
-    public Attraction() {}
+    public AttractionDto() {}
 
-    public Attraction(String name, Location location, String description) {
+    public AttractionDto(String name, LocationDto locationDto, String description) {
         this.name = name;
-        this.location = location;
+        this.locationDto = locationDto;
         this.description = description;
     }
 
@@ -24,12 +24,12 @@ public class Attraction {
         this.name = name;
     }
 
-    public Location getLocation() {
-        return location;
+    public LocationDto getLocation() {
+        return locationDto;
     }
 
-    public void setLocation(Location location) {
-        this.location = location;
+    public void setLocation(LocationDto locationDto) {
+        this.locationDto = locationDto;
     }
 
     public String getDescription() {
@@ -44,20 +44,20 @@ public class Attraction {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Attraction that = (Attraction) o;
-        return Objects.equals(name, that.name) && Objects.equals(location, that.location) && Objects.equals(description, that.description);
+        AttractionDto that = (AttractionDto) o;
+        return Objects.equals(name, that.name) && Objects.equals(locationDto, that.locationDto) && Objects.equals(description, that.description);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, location, description);
+        return Objects.hash(name, locationDto, description);
     }
 
     @Override
     public String toString() {
         return "Attraction{" +
                 "name='" + name + '\'' +
-                ", location=" + location +
+                ", location=" + locationDto +
                 ", description='" + description + '\'' +
                 '}';
     }
