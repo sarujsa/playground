@@ -19,7 +19,7 @@ import java.util.Map;
 @SpringBootApplication
 public class ClientApplication {
 
-  private static final String BASE_URL = "http://csm_server_container:8181";
+  private static final String BASE_URL = "http://csm_server:8181";
   private static final String API = "/api/v1/attractions/";
   private static final String ADD_URL = BASE_URL + API + "add";
   private static final String GET_ONE_URL = BASE_URL + API + "getOne";
@@ -35,7 +35,7 @@ public class ClientApplication {
     var context =
         new SpringApplicationBuilder(ClientApplication.class).web(WebApplicationType.NONE).run();
 
-    Thread.sleep(Duration.ofSeconds(5));
+    Thread.sleep(Duration.ofSeconds(5)); // FIXME remove when client is made interactive
 
     initLocations();
 
