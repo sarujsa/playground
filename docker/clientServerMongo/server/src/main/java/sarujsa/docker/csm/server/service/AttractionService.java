@@ -24,5 +24,9 @@ public class AttractionService {
     Attraction attraction = mapper.fromAttractionDto(attractionDto);
     return attractionRepository.save(attraction);
   }
-  
+
+  public Mono<AttractionDto> getAttractionByName(String name) {
+    return attractionRepository.findByName(name)
+        .map(mapper::fromAttraction);
+  }
 }

@@ -3,81 +3,17 @@ package sarujsa.docker.csm.client;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.boot.web.client.RestTemplateBuilder;
-import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.annotation.Bean;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.client.RestTemplate;
-import sarujsa.docker.csm.dto.AttractionDto;
-import sarujsa.docker.csm.dto.LocationDto;
-import sarujsa.docker.csm.dto.LocationType;
-
-import java.time.Duration;
-import java.util.HashMap;
-import java.util.Map;
+import sarujsa.docker.csm.client.core.Prompt;
 
 @SpringBootApplication
 public class ClientApplication {
-
-  private static final String BASE_URL = "http://csm_server:8181";
-  private static final String API = "/api/v1/attractions/";
-  private static final String ADD_URL = BASE_URL + API + "add";
-  private static final String GET_ONE_URL = BASE_URL + API + "getOne";
-
-  private static final Map<String, LocationDto> locationMap = new HashMap<>();
-
-  @Bean
-  public RestTemplateBuilder restTemplateBuilder() {
-    return new RestTemplateBuilder();
-  }
 
   public static void main(String[] args) throws InterruptedException {
     var context =
         new SpringApplicationBuilder(ClientApplication.class).web(WebApplicationType.NONE).run();
 
-    Thread.sleep(Duration.ofSeconds(5)); // FIXME remove when client is made interactive
-
-    initLocations();
-
-    RestTemplate restTemplate = initRestTemplate(context);
-
-    postAttractions(restTemplate);
-    getAttractions(restTemplate);
-
+    Prompt prompt = context.getBean(Prompt.class);
+    prompt.beginLoop();
   }
 
-  private static void getAttractions(RestTemplate restTemplate) {
-    ResponseEntity<AttractionDto> response = restTemplate.getForEntity(GET_ONE_URL, AttractionDto.class);
-    System.out.println(response.getBody());
-  }
-
-  private static RestTemplate initRestTemplate(ConfigurableApplicationContext context) {
-    RestTemplateBuilder builder = context.getBean(RestTemplateBuilder.class);
-    return builder.build();
-  }
-
-  private static void postAttractions(RestTemplate restTemplate) {
-    AttractionDto attractionDto =
-        new AttractionDto(
-            "Empire State Building",
-            locationMap.get("New York"),
-            "A famous skyscraper in New York");
-    System.out.println("URL = " + ADD_URL);
-    ResponseEntity<String> response = restTemplate.postForEntity(ADD_URL, attractionDto, String.class);
-    System.out.println(response.getBody());
-  }
-
-  private static void initLocations() {
-    LocationDto nile = new LocationDto("Nile", "EG", LocationType.RIVER);
-    LocationDto paris = new LocationDto("Paris", "FR", LocationType.CITY);
-    LocationDto newYork = new LocationDto("New York", "US", LocationType.CITY);
-    LocationDto alps = new LocationDto("Alps", "AT", LocationType.MOUNTAIN);
-    LocationDto sidney = new LocationDto("Sidney", "AU", LocationType.CITY);
-
-    locationMap.put("Nile", nile);
-    locationMap.put("Paris", paris);
-    locationMap.put("New York", newYork);
-    locationMap.put("Alps", alps);
-    locationMap.put("Sidney", sidney);
-  }
 }

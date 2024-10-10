@@ -7,11 +7,15 @@ import reactor.core.publisher.Mono;
 import sarujsa.docker.csm.dto.AttractionDto;
 import sarujsa.docker.csm.server.service.AttractionService;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
+
 @RestController
 @RequestMapping("/api/v1/attractions")
 public class AttractionController {
 
-  private AttractionService attractionService;
+  private final AttractionService attractionService;
 
   @Autowired
   public AttractionController(AttractionService attractionService) {
@@ -25,8 +29,11 @@ public class AttractionController {
   }
 
   @GetMapping("/getOne")
-  public Mono<ResponseEntity<AttractionDto>> getAttractionByName(@RequestParam String name) {
+  public Mono<ResponseEntity<AttractionDto>> getAttractionByName(@RequestParam String name)
+      throws UnsupportedEncodingException {
     System.out.println("getOne invoked with param: " + name);
-    return Mono.empty();
+    return attractionService
+        .getAttractionByName(URLDecoder.decode(name, StandardCharsets.UTF_8))
+        .map(ResponseEntity::ok);
   }
 }

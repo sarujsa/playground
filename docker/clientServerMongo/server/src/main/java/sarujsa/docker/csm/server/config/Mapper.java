@@ -14,4 +14,13 @@ public class Mapper {
     attraction.setLocation(dto.getLocation().getName());
     return attraction;
   }
+
+  public AttractionDto fromAttraction(Attraction attraction) {
+    AttractionDto dto = new AttractionDto();
+    dto.setName(attraction.getName());
+    dto.setDescription(attraction.getDescription());
+//    dto.setLocation(attraction.getLocation()); TODO Fix
+    return dto;
+  }
+
 }
