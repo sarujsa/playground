@@ -9,7 +9,7 @@ public class AttractionDto {
     private String description;
 
     public AttractionDto() {}
-
+    
     public AttractionDto(String name, LocationDto locationDto, String description) {
         this.name = name;
         this.locationDto = locationDto;
