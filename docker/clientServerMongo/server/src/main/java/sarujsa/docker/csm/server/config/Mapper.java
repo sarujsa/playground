@@ -11,7 +11,7 @@ public class Mapper {
     Attraction attraction = new Attraction();
     attraction.setName(dto.getName());
     attraction.setDescription(dto.getDescription());
-    attraction.setLocation(dto.getLocation().getName());
+    attraction.setLocation(dto.getLocation());
     return attraction;
   }
 
@@ -19,7 +19,7 @@ public class Mapper {
     AttractionDto dto = new AttractionDto();
     dto.setName(attraction.getName());
     dto.setDescription(attraction.getDescription());
-//    dto.setLocation(attraction.getLocation()); TODO Fix
+    dto.setLocation(attraction.getLocation());
     return dto;
   }
 
