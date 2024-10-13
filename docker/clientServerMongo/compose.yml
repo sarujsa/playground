@@ -5,6 +5,8 @@ services:
     build:
       context: .
       dockerfile: ./dockerFiles/Dockerfile_client
+    stdin_open: true
+    tty: true
     networks:
       - frontend
     container_name:
@@ -17,9 +19,25 @@ services:
       dockerfile: ./dockerFiles/Dockerfile_server
     networks:
       - frontend
+      - backend
     container_name:
       csm_server_container
+    depends_on:
+      - csm_mongo
+  csm_mongo:
+    image: mongo
+    networks:
+      - backend
+    container_name: csm_mongo
+    volumes:
+      - csm_mongodb_vol:/data/db
+
+volumes:
+  csm_mongodb_vol:
+    external: true
 
 networks:
   frontend:
+    driver: bridge
+  backend:
     driver: bridge
