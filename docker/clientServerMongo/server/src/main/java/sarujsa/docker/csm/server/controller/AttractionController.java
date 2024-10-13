@@ -1,15 +1,15 @@
 package sarujsa.docker.csm.server.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 import sarujsa.docker.csm.dto.AttractionDto;
 import sarujsa.docker.csm.server.service.AttractionService;
-
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
 
 @RestController
 @RequestMapping("/api/v1/attractions")
@@ -34,6 +34,9 @@ public class AttractionController {
     System.out.println("getOne invoked with param: " + name);
     return attractionService
         .getAttractionByName(URLDecoder.decode(name, StandardCharsets.UTF_8))
-        .map(ResponseEntity::ok);
+        .map(ResponseEntity::ok)
+        .switchIfEmpty(
+            Mono.just(
+                new ResponseEntity<AttractionDto>((AttractionDto) null, HttpStatus.NOT_FOUND)));
   }
 }
